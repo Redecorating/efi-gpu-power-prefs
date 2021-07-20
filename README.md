@@ -3,7 +3,7 @@
 Set the boot gpu on dual gpu macbooks to the iGPU. I'm assuming you are using grub, and have installed `gnu-efi`.
 
 1. [Spoof apple-set-os](https://wiki.t2linux.org/guides/hybrid-graphics/#enabling-the-igpu), you do not need to do the nvram thing (this repo does it for you)
-2.  Install this:
+2.  Run this:
 	```
 	make
 	sudo cp gpu-power-prefs-x86_64.efi /boot/
