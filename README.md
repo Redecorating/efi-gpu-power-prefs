@@ -6,8 +6,7 @@ Set the boot gpu on dual gpu macbooks to the iGPU. I'm assuming you are using gr
 2.  Clone the repo and run this:
 	```
 	make
-	sudo cp gpu-power-prefs-?gpu-x86_64.efi /boot/
-	sudo cp 41_apple_gpu-power-prefs /etc/grub.d/
+	make install
 	sudo grub-mkconfig -o /boot/grub/grub.cfg
 	```
 3. In the grub menu, select the "Enable iGPU" option, it will power down and then you can boot again with the igpu.

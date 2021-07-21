@@ -48,3 +48,8 @@ all: $(TARGET)
 
 clobber:
 	rm -rf *.o *.so *.efi EFI EFI-verboseboot
+
+install:
+	sudo cp -v gpu-power-prefs-?gpu-x86_64.efi /boot/
+	sudo cp -v 41_apple_gpu-power-prefs /etc/grub.d/
+	: Please regenerate your grub config with "sudo grub-mkconfig -o /boot/grub/grub.cfg"

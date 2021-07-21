@@ -5,17 +5,19 @@ tail -n +8 $0|sed -e s#IGPU_PATH#$igpu#g -e s#DGPU_PATH#$dgpu#g
 exit
 # This script will load /boot/gpu-power-prefs-x86_64.efi from your root filesystem to allow usage of the iGPU on dual GPU macbooks.
 # It should account for btrfs subvolumes and encryption, and probably lvm.
-menuentry "Enable iGPU for future boots with gpu-power-prefs=1, and shutdown" --class tool {
-	chainloader foo
+menuentry "Enable iGPU for future boots with gpu-power-prefs=1, and shutdown." --class tool {
+	insmod chain
 	root_old=${root}
 	root=(hd0)
 	chainloader (${root_old})IGPU_PATH
 	boot
+	root=${root_old}
 }
-menuentry "Revert to dGPU for future boots with gpu-power-prefs=0, and shutdown" --class tool {
-	chainloader foo
+menuentry "Revert to dGPU for future boots with gpu-power-prefs=0, and shutdown." --class tool {
+	insmod chain
 	root_old=${root}
 	root=(hd0)
 	chainloader (${root_old})DGPU_PATH
 	boot
+	root=${root_old}
 }
