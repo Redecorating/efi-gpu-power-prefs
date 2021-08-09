@@ -1,0 +1,39 @@
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+
+      - name: Install dependency
+        run: | 
+          sudo apt-get update
+          sudo apt-get install build-essential gnu-efi
+      - name: make
+        run: | 
+            make
+      - name: generate tag
+        id: tag
+        run: |
+          count=$(git rev-list --count HEAD)
+          hash=$(git rev-parse --short HEAD)
+          echo "::set-output name=tag::r${count}.${hash}"
+        
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+            repo_token: "${{ secrets.GITHUB_TOKEN }}"
+            automatic_release_tag: "${{ steps.tag.outputs.tag }}"
+            prerelease: false
+            title: "Release ${{ steps.tag.outputs.tag }}"
+            files: |
+              *.efi
